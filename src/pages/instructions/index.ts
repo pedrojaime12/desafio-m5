@@ -1,3 +1,56 @@
+const imageURL = require("url:../../images/fondo.png");
+
 export function initInstructions(params){
-    document.createElement("h1").textContent = "HOLA soy instructions"
+   const div = document.createElement("div")
+   const style = document.createElement("style")
+   style.innerHTML = `
+
+   .root{
+    display:flex;
+    justify-content:center; 
+    margin:0;
+    padding:5px;
+    
+   }
+   .imagen{
+    position:relative;
+    width:400px;
+    height: 100vh;
+    top:-20px;
+    left:-5px
+   }
+   .text-container{
+    position:absolute;
+    margin: 100px 30px;
+   }
+   .boton-container{
+    position:absolute;
+    bottom:210px;
+
+   }
+   .options-container{
+    position:absolute;
+    bottom: -25px;
+ }
+
+   `   
+   div.innerHTML = `     
+   <img class="imagen" src=${imageURL}>
+    <div class="text-container">
+    <my-text variant="body">
+    Presioná jugar
+    y elegí: piedra, papel o tijera antes de que pasen los 3 segundos. </my-text>
+    </div>
+    <div class="boton-container">
+      <my-button> Jugar ! </my-button>
+    </div>
+    <div class="options-container">
+    <play-options></play-options>
+  </div>
+   `
+   div.className = "root"
+   div.appendChild(style)
+
+   return div
+
 };

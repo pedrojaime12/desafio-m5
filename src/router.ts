@@ -19,7 +19,7 @@ const routes = [
 export function initRouter(container:Element){
 
     function goTo(path){
-        history.pushState({}, "" , path);
+        history.pushState({}, "" , path)
         handleRoute(path);
     };
 
@@ -29,10 +29,10 @@ export function initRouter(container:Element){
             
            if(r.path.test(route))
            {
-               const el = r.component({goTo:goTo})
+               const el = r.component({goTo:goTo})                
                   if (container.firstChild){
                   container.firstChild.remove();
-               }
+                  }
                container.appendChild(el)
             }
         }

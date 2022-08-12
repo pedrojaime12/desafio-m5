@@ -32,10 +32,7 @@ const state = {
             case "papelpapel":
             case "tijeratijera":
                 return 3; // Empate
-
         }
-
-        
     },
     pushToHistory(play:Game){
         const cs = this.getState();
