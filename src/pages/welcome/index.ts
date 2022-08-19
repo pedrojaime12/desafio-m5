@@ -32,6 +32,7 @@ export function initWelcome(params){
 
    }
    .options-container{
+      display:flex;
       position:absolute;
       bottom: -25px;
    }
@@ -47,24 +48,19 @@ export function initWelcome(params){
      <my-button class="boton-comp"> Empezar !! </my-button>
    </div>
    <div class="options-container">
-     <play-options></play-options>
+     <play-options variant="piedra"></play-options>
+     <play-options variant="papel"></play-options>
+     <play-options variant="tijera"></play-options>
    </div>
 
    `
-
-   // console.log("hola",boton);
-   
-
-
    div.className = "root"
    div.appendChild(style)
-   console.log(params);
-   
-
    const btn = div.querySelector(".boton-comp")
-   
-   btn?.addEventListener("click", (e)=>{
-    params.goTo("play")
+
+   btn?.addEventListener("click", ()=>{
+    params.goTo("/desafio-m5/instructions")
+     
    })
    return div
 

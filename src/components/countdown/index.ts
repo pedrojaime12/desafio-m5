@@ -10,17 +10,19 @@ export function initCountdown (){
             var shadow = this.attachShadow({ mode : "open"})
             
             const div = document.createElement("div")
+            div.className = "container-number"
             const style = document.createElement("style")
             
             let counter = 4;    
                 const intervalId = setInterval(()=>{
                     counter --;            
-                    if(counter == 0){
-                        clearInterval(intervalId)
-                    }
                     div.innerHTML = `
                     <h2 class="number"> ${counter}</h2>
                     `;
+                    if(counter == 0){
+                        clearInterval(intervalId)
+                    }
+
                 }, 1000)
             
             

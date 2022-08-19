@@ -1,7 +1,7 @@
 type Jugada = "piedra" | "papel" | "tijera"
 type Game = {
-    userPLay : Jugada,
-    computerPlay : Jugada,
+    userPLay : string,
+    computerPlay : string,
 }
 const state = {
     data : {
@@ -9,15 +9,18 @@ const state = {
             userPlay: "",
             computerPlay : "" ,
         },
-        history : []
+        history : [],
+        listeners:[],
     },
  
     getState(){
         return this.data;
     },
+
     setState(newState){
-        this.data = newState     
+        this.data = newState;
     },
+
     whoWins(userPlay:Jugada , computerPlay:Jugada){
         switch(userPlay + computerPlay){
             case "piedratijera":
@@ -27,17 +30,37 @@ const state = {
             case "piedrapapel":
             case "papeltijera":
             case "tijerapiedra":
-                return 2; // Pierde el usuario
+                return 2; // Gana la pc
             case "piedrapiedra":
             case "papelpapel":
             case "tijeratijera":
                 return 3; // Empate
         }
     },
-    pushToHistory(play:Game){
-        const cs = this.getState();
-        cs.history(play)
-    }
+
+    currentState({userPLay, computerplay}){
+        const lastState = this.getState();
+        
+        this.setState({
+            ...lastState,
+            userPLay,
+            computerplay
+        })
+
+    },
+    pushToHistory(){
+        const lastState = this.getState();
+        const history = localStorage.getItem("save-history");
+       
+        if (history === null){
+            localStorage.setItem("save-history",JSON.stringify({userPlay:0,computerPlay:0}))
+        }else{
+            this.setState({
+                ...lastState,
+                history:JSON.parse(history)
+            })
+        }
+    },
 }
 
 export {state};

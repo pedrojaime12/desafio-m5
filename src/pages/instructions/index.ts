@@ -29,9 +29,11 @@ export function initInstructions(params){
 
    }
    .options-container{
+    display:flex;
     position:absolute;
     bottom: -25px;
- }
+ };
+ 
 
    `   
    div.innerHTML = `     
@@ -42,15 +44,23 @@ export function initInstructions(params){
     y elegí: piedra, papel o tijera antes de que pasen los 3 segundos. </my-text>
     </div>
     <div class="boton-container">
-      <my-button> Jugar ! </my-button>
+      <my-button class="boton-comp"> Jugar ! </my-button>
     </div>
     <div class="options-container">
-    <play-options></play-options>
+     <play-options variant="piedra"></play-options>
+     <play-options variant="papel"></play-options>
+     <play-options variant="tijera"></play-options>
   </div>
    `
    div.className = "root"
    div.appendChild(style)
 
+   const btn = div.querySelector(".boton-comp")
+  
+   btn?.addEventListener("click", ()=>{
+    params.goTo("/desafio-m5/play")
+     
+   })
    return div
 
 };

@@ -4,15 +4,19 @@ import { initPlay } from "./pages/play";
 
 const routes = [
     {
-        path: /\/welcome/,
+        path: /\/desafio-m5\/welcome/,
         component: initWelcome
     },
     {
-        path: /\/instructions/,
+        path: /\/desafio-m5/,
+        component: initWelcome
+    },
+    {
+        path: /\/desafio-m5\/instructions/,
         component:initInstructions
     },
     {
-        path: /\/play/,
+        path: /\/desafio-m5\/play/,
         component:initPlay
     }
 ] 
@@ -38,9 +42,18 @@ export function initRouter(container:Element){
         }
     }
 
-    if (location.pathname == "/"){
-        goTo("/welcome")
+    if (location.pathname.includes("github.io")){
+        goTo("/desafio-m5")
     } else {
         handleRoute(location.pathname)
     }
+    
+    if (location.host == "localhost:1234"){
+        const path = location.pathname
+        goTo("/desafio-m5" + path)
+    } else {
+        handleRoute(location.pathname)
+        console.log(location);
+    }
+
 }

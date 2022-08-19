@@ -2,45 +2,61 @@ const piedra = require("url:../../images/piedra.png");
 const papel = require("url:../../images/papel.png");
 const tijera = require("url:../../images/tijera.png");
 
-/* const papel = require("url:../../images/fondo.png");
-const tijera = require("url:../../images/fondo.png");
- */
+
+
 export function initPlayOp (){
-
-    customElements.define("play-options" , class extends HTMLElement{
+    class Plays extends HTMLElement{
+        shadow: ShadowRoot;
+        variants : string[] = ["piedra", "papel", "tijera"]
+        
+        
         constructor(){
-            super()
-            this.render()
-        }
-        render(){
-            const variant = this.getAttribute("variant") || "init"
-            var shadow = this.attachShadow({ mode : "open"})
             
-            const div = document.createElement("div")
-            const style = document.createElement("style")
-            div.className = "root"
+            super();
+            this.shadow = this.attachShadow({ mode : "open"})
+               
+            const type = this.getAttribute("type") || "init"
+            const variant = this.getAttribute("variant") || "piedra";
+            
+        const style = document.createElement("style")
+        style.innerHTML = `
+        .init{
+            height: 126px;
+            width: 56px;
+            margin: 0 10px;
+            hover: click;
+        }
+        .play{
+            height:200px;
+            width:100px;
+            margin:0 10px;
+            hover: click;
+        }
+        
+        `;
+        this.shadow.appendChild(style)
+        const div = document.createElement("div")
+        this.shadow.appendChild(div)
+        
+        
+        
+        
+        if(variant == "piedra"){   
             div.innerHTML = `
-            <img class="${variant}" src=${piedra}> 
-            <img class="${variant}" src=${papel}> 
-            <img class="${variant}" src=${tijera}> 
-            `;
-            
-            style.innerHTML = `
-            .init{
-                height: 126px;
-                width: 56px;
-                margin: 0 10px;
+            <img id="piedra" class="${type}" src=${piedra}> 
+            `
             }
-            .play{
-                height:200px;
-                width:100px;
-                margin:0 10px;
+            if(variant == "papel"){
+                div.innerHTML = `
+            <img id="papel" class="${type}" src=${papel}> 
+            `
             }
-         
-            `;
-            shadow.appendChild(div)
-            shadow.appendChild(style)
-
-        }
-    })
+            if(variant == "tijera"){
+                div.innerHTML = `
+            <img id="tijera" class="${type}" src=${tijera}> 
+            `
+            }
+        };
+    }
+    customElements.define("play-options" , Plays)
 }
