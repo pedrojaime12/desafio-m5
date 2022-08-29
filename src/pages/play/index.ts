@@ -1,8 +1,8 @@
 const imageURL = require("url:../../images/fondo.png");
-import {state, state} from "../../state"
+import {state} from "../../state"
 
 export function initPlay(params){
-
+    state.loadLocalHistory()
     const div = document.createElement("div")
     div.innerHTML = `     
     <img class="imagen" src=${imageURL}>
@@ -15,12 +15,6 @@ export function initPlay(params){
      <play-options class="tijera" type="play" variant="tijera"> </play-options>
        </div>
     `
-   // const cd = div.querySelector(".countdown")
-    // const divNumber = cd?.shadowRoot?.querySelector(".container-number")
-    
-   /*  
-    if(div.querySelector(".countdown")?.textContent == ""){console.log("");
-    } */
 
 const style = document.createElement("style");
 style.innerHTML = `
@@ -55,6 +49,7 @@ body{
    .options-play :hover{
     background:lightBlue;
    }
+
    `
    div.appendChild(style);
  
@@ -89,13 +84,8 @@ body{
         const computerPlay = movPC() 
         const userPlay = movUser;
 
-
-        
-
         showGame(userPlay,computerPlay)
-
         function showGame(user,pc){
-            console.log(user,pc);
             return   div.innerHTML = `
             <div style= "display: flex;
             align-items: center;
@@ -114,35 +104,149 @@ body{
             </div>
             `
         }
-       // clearInterval(intervalId)
+        
         const comparacion = ResultGame(userPlay,computerPlay);
+
+        function count(){
+            const lastState = state.getState();
+            
+            const score = {
+                userWin : 0,
+                computerWin : 0
+            } 
+
+
+            for (const it of  state.data.history) {
+                if(comparacion == 1){
+                    it.userWin = score.userWin ++; 
+                    return {
+                        ...lastState,
+                        score
+                    }
+                }
+                if(comparacion == 2){
+                    it.computerWin = score.computerWin ++; 
+                    return {
+                        ...lastState,
+                        score}
+                }
+                if(comparacion == 3){
+                    return score
+                }   
+            }
+        }  
+ 
+        
+        const userCount = count()?.userWin
+       var pcCount = count()?.computerWin
+
         let counter = 2;    
                 setInterval(()=>{
                     counter --;            
                     if(counter == 0){
                         if(comparacion == 1){
                             return div.innerHTML = `
-                            <div class="container-result">
-                             <result-game class="result" variant="win"></result-game>
-                             <div class="button-container" style="width:100%; height: 10vh; background-color:#d4d64a;text-align:center; display:flex; justify-content:center; align-items:center;"> 
-                            <my-button class="boton" style="margin-bottom:10px;"> Volver a jugar </my-button>
-                             </div> 
-                            </div>
-                            ` }
-                            if(comparacion == 2){
-                                return div.innerHTML = `
-                            <div class="container-result">
-                             <result-game variant="lose"></result-game>
-                            <div class="button-container" style="width:100%; height: 10vh; background-color:#894949;text-align:center; display:flex; justify-content:center; align-items:center;"> 
-                             <my-button class="boton" style="margin-bottom:10px;"> Volver a jugar </my-button>
-                             </div> 
-                            </div>
+                            <div class="container-result" style=" 
+                            background-color:#d4d64a;   
+                            height:100vh;
+                            min-width:300px;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;">
+                            <result-game class="result" variant="win"></result-game>
+                            <div class="score-container" style="
+                            width:260px;
+                            height:217px;
+                            background-color:white;
+                            border: black solid 10px;">
+                              <h4 class="score-title" style="
+                              text-align:center;
+                              font-size:55px;
+                              margin:0;" > Score </h4>
+                              <div>
+                              <h5 class="score-user" style="font-size:45px;
+                              test-align:center;
+                              margin:0;"> Vos : ${userCount}</h5>
+                                <h5 class="score-pc" style="font-size:45px;
+                                test-align:center;
+                                margin:0;"> Máquina : ${pcCount} </h5>
+                                </div>
+                                </div>
+                                <div class="button-container" style="width:100%; height: 10vh; background-color:#d4d64a;text-align:center; display:flex; justify-content:center; align-items:center;"> 
+                                <my-button class="boton" style="margin-bottom:10px;"> Volver a jugar </my-button>
+                                </div> 
+                                </div>
+                                ` }
+                                if(comparacion == 2){
+                                    return div.innerHTML = `
+                                    <div class="container-result" style="
+                                        height:100vh;
+                                        background-color:#894949;   
+                                        min-width:300px;
+                                        display: flex;
+                                        flex-direction: column;
+                                        justify-content: center;
+                                        align-items: center;">
+                                    <result-game variant="lose"></result-game>
+                                    <div class="score-container" style="
+                                        margin: 0 auto;
+                                        width:260px;
+                                        height:217px;
+                                        background-color:white;
+                                        border: black solid 10px;">
+                                    <h4 class="score-title" style="
+                                        text-align:center;
+                                        font-size:55px;
+                                        margin:0;" > Score 
+                                    </h4>
+                                    <div>
+                                    <h5 class="score-user" style="font-size:45px;
+                                        test-align:center;
+                                        margin:0;"> Vos : ${userCount}
+                                    </h5>
+                                    <h5 class="score-pc" 
+                                        style="font-size:45px;
+                                        test-align:center;
+                                        margin:0;"> Máquina : ${pcCount} 
+                                    </h5>
+                                    </div>
+                                    </div>
+                                    <div class="button-container" style="width:100%; height: 10vh; background-color:#894949;text-align:center; display:flex; justify-content:center; align-items:center;"> 
+                                    <my-button class="boton" style="margin-bottom:10px;"> Volver a jugar </my-button>
+                                </div> 
+                              </div>
                             `
-                            }
-                            if(comparacion == 3){
-                                return div.innerHTML = `
-                                <div class="container-result">
+                        }
+                        if(comparacion == 3){
+                            return div.innerHTML = `
+                            <div class="container-result" style=" 
+                            height:100vh;
+                            background-color:lightBlue;   
+                            min-width:300px;
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;">
                                 <result-game variant="draw"></result-game>
+                                <div class="score-container" style="
+                                width:260px;
+                                height:217px;
+                                background-color:white;
+                                border: black solid 10px;">
+                                 <h4 class="score-title" style="
+                                 text-align:center;
+                                 font-size:55px;
+                                 margin:0;" > Score </h4>
+                                 <div>
+                                   <h5 class="score-user" style="font-size:45px;
+                                   test-align:center;
+                                   margin:0;"> Vos : ${userCount}</h5>
+                                   <h5 class="score-pc" style="font-size:45px;
+                                   test-align:center;
+                                   margin:0;"> Máquina : ${pcCount} </h5>
+                                 </div>
+                                </div>
                                 <div class="button-container" style="width:100%; height: 10vh; background-color:lightBlue; text-align:center; display:flex; justify-content:center; align-items:center;"> 
                                 <my-button class="boton" style="margin-bottom:10px;"> Volver a jugar </my-button>
                                  </div> 
@@ -158,7 +262,7 @@ body{
         div.appendChild(style)
 
     function ResultGame(userPlay,computerPlay){
-        const juego =  state.whoWins(userPlay,computerPlay);
+        const juego =  state.whoWins({userPlay,computerPlay});
         if(juego==1){
             return 1
         }
@@ -167,9 +271,9 @@ body{
         }
         if(juego==3){
             return 3
-    }
-};
-}
-
+        }
+    };
+  }  
+  
 return div;
-}
+}   

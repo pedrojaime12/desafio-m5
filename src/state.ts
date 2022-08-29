@@ -1,17 +1,15 @@
-type Jugada = "piedra" | "papel" | "tijera"
+
+
 type Game = {
-    userPLay : string,
+    userPlay : string,
     computerPlay : string,
 }
 const state = {
     data : {
-        currentGame : {
-            userPlay: "",
-            computerPlay : "" ,
-        },
-        history : [],
+        currentGame : [] : Array,
+        history : [] : Array ,
+    },   
         listeners:[],
-    },
  
     getState(){
         return this.data;
@@ -19,10 +17,19 @@ const state = {
 
     setState(newState){
         this.data = newState;
+        for (const cb of this.listeners) {
+            cb()
+        }
+        localStorage.setItem("save-history",JSON.stringify(this.getState().history))
     },
-
-    whoWins(userPlay:Jugada , computerPlay:Jugada){
-        switch(userPlay + computerPlay){
+    
+    subscribe(callback: (any) => any) {
+       // recibe callbacks para ser avisados posteriormente
+       this.listeners.push(callback)
+       
+    },
+    whoWins(game : Game){
+        switch(game.userPlay + game.computerPlay){
             case "piedratijera":
             case "papelpiedra":
             case "tijerapapel":
@@ -37,30 +44,36 @@ const state = {
                 return 3; // Empate
         }
     },
-
-    currentState({userPLay, computerplay}){
+    currentGameWin (wins){
         const lastState = this.getState();
+        console.log(this.data.history);
         
+        console.log(this.data.history);
+        
+
+
         this.setState({
             ...lastState,
-            userPLay,
-            computerplay
+            currentGame : {wins}
         })
-
+        
     },
-    pushToHistory(){
+    
+    loadLocalHistory(){
         const lastState = this.getState();
         const history = localStorage.getItem("save-history");
        
         if (history === null){
             localStorage.setItem("save-history",JSON.stringify({userPlay:0,computerPlay:0}))
+            console.log(history,"null");
+            
         }else{
             this.setState({
                 ...lastState,
                 history:JSON.parse(history)
+                
             })
         }
     },
 }
-
 export {state};
