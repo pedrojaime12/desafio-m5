@@ -1,13 +1,12 @@
 
-
 type Game = {
     userPlay : string,
     computerPlay : string,
 }
 const state = {
-    data : {
-        currentGame : [] : Array,
-        history : [] : Array ,
+    data: {
+        currentGame: ([] = []),
+        history: { userWin: 0, computerWin: 0 },
     },   
         listeners:[],
  
@@ -67,13 +66,14 @@ const state = {
             localStorage.setItem("save-history",JSON.stringify({userPlay:0,computerPlay:0}))
             console.log(history,"null");
             
-        }else{
-            this.setState({
-                ...lastState,
-                history:JSON.parse(history)
-                
-            })
         }
+        else{
+            lastState.history = JSON.parse(history);
+            state.setState(lastState);
+          }
+        },
+    saveHistory(jugada) {
+        localStorage.setItem("save-history", JSON.stringify(jugada));
     },
 }
 export {state};

@@ -23,6 +23,7 @@ const routes = [
 export function initRouter(container:Element){
 
     function goTo(path){
+
         history.pushState({}, "" , path)
         handleRoute(path);
     };
@@ -31,13 +32,16 @@ export function initRouter(container:Element){
 
         for (const r of routes) {
             
-           if(r.path.test(route))
-           {
-               const el = r.component({goTo:goTo})                
-                  if (container.firstChild){
-                  container.firstChild.remove();
-                  }
-               container.appendChild(el)
+           if(r.path.test(route)){
+            const el = r.component({goTo:goTo});
+            if(container.firstChild){
+                container.firstChild.remove();
+            }
+            container.appendChild(el)
+            console.log(typeof el);
+            
+          
+            
             }
         }
     }
@@ -53,7 +57,6 @@ export function initRouter(container:Element){
         goTo("/desafio-m5" + path)
     } else {
         handleRoute(location.pathname)
-        console.log(location);
     }
 
 }

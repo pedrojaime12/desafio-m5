@@ -107,36 +107,24 @@ body{
         
         const comparacion = ResultGame(userPlay,computerPlay);
 
-        function count(){
+        function count() {
             const lastState = state.getState();
-            
-            const score = {
-                userWin : 0,
-                computerWin : 0
-            } 
-
-
-            for (const it of  state.data.history) {
-                if(comparacion == 1){
-                    it.userWin = score.userWin ++; 
-                    return {
-                        ...lastState,
-                        score
-                    }
-                }
-                if(comparacion == 2){
-                    it.computerWin = score.computerWin ++; 
-                    return {
-                        ...lastState,
-                        score}
-                }
-                if(comparacion == 3){
-                    return score
-                }   
+      
+            const score = lastState.history;
+            state.saveHistory(score);
+      
+            if (comparacion == 1) {
+              score.userWin++;
+              return score;
+            } else if (comparacion == 2) {
+              score.computerWin++;
+      
+              return score;
+            } else if (comparacion == 3) {
+              return score;
             }
-        }  
- 
-        
+          }
+         
         const userCount = count()?.userWin
        var pcCount = count()?.computerWin
 
@@ -273,7 +261,7 @@ body{
             return 3
         }
     };
-  }  
-  
-return div;
-}   
+    return div;
+ }  
+}
+   
