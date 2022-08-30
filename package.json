@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "dev": "parcel serve ./src/index.html",
+    "dev": "parcel serve ./src/index.html -p 1234",
     "build": "parcel build ./src/index.html --dist-dir build --public-url /desafio-m5",
     "deploy": "gh-pages -d build"
   },

@@ -35,6 +35,11 @@ body{
     top:-20px;
     left:-5px
    }
+   @media (min-width : 800px){
+    .imagen{
+        width: 100vw;
+    }
+  }
    .countdown-container{
     position:absolute;
     top: 30%;
@@ -261,7 +266,7 @@ body{
             return 3
         }
     };
-    return div;
- }  
+}  
+return div;
 }
    

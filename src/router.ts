@@ -38,10 +38,7 @@ export function initRouter(container:Element){
                 container.firstChild.remove();
             }
             container.appendChild(el)
-            console.log(typeof el);
-            
-          
-            
+
             }
         }
     }
@@ -57,6 +54,8 @@ export function initRouter(container:Element){
         goTo("/desafio-m5" + path)
     } else {
         handleRoute(location.pathname)
+    } 
+    window.onpopstate = function(event){
+        handleRoute(location.pathname)
     }
-
 }

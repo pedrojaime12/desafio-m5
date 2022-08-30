@@ -21,6 +21,12 @@ export function initWelcome(params){
     left:-20px
    }
 
+   @media (min-width : 800px){
+    .imagen{
+        width: 100vw;
+    }
+  }
+
    .title{
     margin-top: 100px;
     text-align: center;

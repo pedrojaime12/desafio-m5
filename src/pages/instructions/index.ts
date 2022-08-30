@@ -19,6 +19,11 @@ export function initInstructions(params){
     top:-20px;
     left:-5px
    }
+   @media (min-width : 800px){
+      .imagen{
+          width: 100vw;
+      }
+    }
    .text-container{
     position:absolute;
     margin: 100px 30px;
