@@ -15,6 +15,8 @@ export function initPlay(params){
      <play-options class="tijera" type="play" variant="tijera"> </play-options>
        </div>
     `
+    div.querySelector(".countdown-container")?.addEventListener("click", ()=>{
+        params.goTo("/desafio-m5/play")})
 
 const style = document.createElement("style");
 style.innerHTML = `
@@ -248,7 +250,7 @@ body{
                             } 
                         }   
                         div.querySelector(".button-container")?.addEventListener("click", ()=>{
-                             document.location.reload()
+                             params.goTo("/desafio-m5/play")
                         })
                     }, 1000)
 

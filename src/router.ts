@@ -1,6 +1,7 @@
 import { initWelcome } from "./pages/welcome";
 import { initInstructions } from "./pages/instructions";
 import { initPlay } from "./pages/play";
+import path from "path";
 
 const routes = [
     {
@@ -43,8 +44,9 @@ export function initRouter(container:Element){
         }
     }
 
-    if (location.pathname.includes("github.io")){
-        goTo("/desafio-m5")
+    if (location.host.includes("github.io")){
+        const pathname = location.pathname
+        goTo(pathname)
     } else {
         handleRoute(location.pathname)
     }
