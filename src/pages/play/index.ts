@@ -114,26 +114,21 @@ body{
         
         const comparacion = ResultGame(userPlay,computerPlay);
 
-        function count() {
+        (function count() {
             const lastState = state.getState();
       
             const score = lastState.history;
-            state.saveHistory(score);
-      
+            
             if (comparacion == 1) {
-              score.userWin++;
-              return score;
+                score.userWin++;
             } else if (comparacion == 2) {
-              score.computerWin++;
-      
-              return score;
-            } else if (comparacion == 3) {
-              return score;
+                score.computerWin++;
             }
-          }
+            state.saveHistory(score);
+          })();
          
-        const userCount = count()?.userWin
-       var pcCount = count()?.computerWin
+        const userCount = state.getState().history
+       var pcCount = state.getState().history;
 
         let counter = 2;    
                 setInterval(()=>{
